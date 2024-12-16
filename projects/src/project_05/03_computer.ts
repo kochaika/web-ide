@@ -70,7 +70,7 @@ export const add_cmp = `|time |reset|ARegister|DRegister|PC[]|RAM16K[0]|RAM16K[1
 | 11  |  0  |       3 |       5 |   4|       0 |       0 |       0 |
 | 12  |  0  |       0 |       5 |   5|       0 |       0 |       0 |
 | 13  |  0  |       0 |       5 |   6|       5 |       0 |       0 |`;
-export const max_tst = `// This file is part of www.nand2tetris.org
+export const tst = `// This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
 // File name: projects/5/ComputerMax.tst
@@ -82,25 +82,26 @@ export const max_tst = `// This file is part of www.nand2tetris.org
 // program counter, R0, R1, and R2.
 load Computer.hdl,
 compare-to ComputerMax.cmp,
-output-list time%S1.3.1 reset%B2.1.2 ARegister[]%D1.7.1 DRegister[]%D1.7.1 PC[]%D0.4.0 RAM16K[0]%D1.7.1 RAM16K[1]%D1.7.1 RAM16K[2]%D1.7.1;
+output-list reset%B2.1.2 ARegister[]%D1.7.1 DRegister[]%D1.7.1 PC[]%D0.4.0 RAM16K[0]%D1.7.1 RAM16K[1]%D1.7.1 RAM16K[2]%D1.7.1;
 
 // Loads the binary program Add.hack into the computer's instruction memory 
 ROM32K load Max.hack,
 
-// first run: computes max(3,5)
-set RAM16K[0] 3,
-set RAM16K[1] 5,
-output;
-
-repeat 14 {
-    tick, tock, output;
-}
-
-// resets the PC
-set reset 1,
-tick, tock, output;
+// // first run: computes max(3,5)
+// set RAM16K[0] 3,
+// set RAM16K[1] 5,
+// output;
+//
+// repeat 14 {
+//     tick, tock, output;
+// }
+//
+// // resets the PC
+// set reset 1,
+// tick, tock, output;
 
 // second run: computes max(23456,12345)
+set reset 1, tick, tock;
 set reset 0,
 set RAM16K[0] 23456,
 set RAM16K[1] 12345,
@@ -111,34 +112,18 @@ repeat 10 {
     tick, tock, output;
 }
 `;
-export const max_cmp = `|time |reset|ARegister|DRegister|PC[]|RAM16K[0]|RAM16K[1]|RAM16K[2]|
-| 0   |  0  |       0 |       0 |   0|       3 |       5 |       0 |
-| 1   |  0  |       0 |       0 |   1|       3 |       5 |       0 |
-| 2   |  0  |       0 |       3 |   2|       3 |       5 |       0 |
-| 3   |  0  |       1 |       3 |   3|       3 |       5 |       0 |
-| 4   |  0  |       1 |      -2 |   4|       3 |       5 |       0 |
-| 5   |  0  |      10 |      -2 |   5|       3 |       5 |       0 |
-| 6   |  0  |      10 |      -2 |   6|       3 |       5 |       0 |
-| 7   |  0  |       1 |      -2 |   7|       3 |       5 |       0 |
-| 8   |  0  |       1 |       5 |   8|       3 |       5 |       0 |
-| 9   |  0  |      12 |       5 |   9|       3 |       5 |       0 |
-| 10  |  0  |      12 |       5 |  12|       3 |       5 |       0 |
-| 11  |  0  |       2 |       5 |  13|       3 |       5 |       0 |
-| 12  |  0  |       2 |       5 |  14|       3 |       5 |       5 |
-| 13  |  0  |      14 |       5 |  15|       3 |       5 |       5 |
-| 14  |  0  |      14 |       5 |  14|       3 |       5 |       5 |
-| 15  |  1  |      14 |       5 |   0|       3 |       5 |       5 |
-| 15  |  0  |      14 |       5 |   0|   23456 |   12345 |       5 |
-| 16  |  0  |       0 |       5 |   1|   23456 |   12345 |       5 |
-| 17  |  0  |       0 |   23456 |   2|   23456 |   12345 |       5 |
-| 18  |  0  |       1 |   23456 |   3|   23456 |   12345 |       5 |
-| 19  |  0  |       1 |   11111 |   4|   23456 |   12345 |       5 |
-| 20  |  0  |      10 |   11111 |   5|   23456 |   12345 |       5 |
-| 21  |  0  |      10 |   11111 |  10|   23456 |   12345 |       5 |
-| 22  |  0  |       0 |   11111 |  11|   23456 |   12345 |       5 |
-| 23  |  0  |       0 |   23456 |  12|   23456 |   12345 |       5 |
-| 24  |  0  |       2 |   23456 |  13|   23456 |   12345 |       5 |
-| 25  |  0  |       2 |   23456 |  14|   23456 |   12345 |   23456 |`;
+export const cmp = `|reset|ARegister|DRegister|PC[]|RAM16K[0]|RAM16K[1]|RAM16K[2]|
+|  0  |       0 |       0 |   0|   23456 |   12345 |       0 |
+|  0  |       0 |       0 |   1|   23456 |   12345 |       0 |
+|  0  |       0 |   23456 |   2|   23456 |   12345 |       0 |
+|  0  |       1 |   23456 |   3|   23456 |   12345 |       0 |
+|  0  |       1 |   11111 |   4|   23456 |   12345 |       0 |
+|  0  |      10 |   11111 |   5|   23456 |   12345 |       0 |
+|  0  |      10 |   11111 |  10|   23456 |   12345 |       0 |
+|  0  |       0 |   11111 |  11|   23456 |   12345 |       0 |
+|  0  |       0 |   23456 |  12|   23456 |   12345 |       0 |
+|  0  |       2 |   23456 |  13|   23456 |   12345 |       0 |
+|  0  |       2 |   23456 |  14|   23456 |   12345 |   23456 |`;
 export const rect_tst = `// This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.

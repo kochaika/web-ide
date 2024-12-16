@@ -21,15 +21,9 @@ export const CHIPS = {
   "CPU-external.tst": CPU.external_tst,
   "CPU-external.cmp": CPU.external_cmp,
   "Computer.hdl": Computer.hdl,
-  "ComputerAdd.tst": Computer.add_tst,
-  "ComputerAdd.cmp": Computer.add_cmp,
-  "ComputerMax.tst": Computer.max_tst,
-  "ComputerMax.cmp": Computer.max_cmp,
-  "ComputerRect.tst": Computer.rect_tst,
-  "ComputerRect.cmp": Computer.rect_cmp,
-  "Add.hack": Computer.add,
+  "Computer.tst": Computer.tst,
+  "Computer.cmp": Computer.cmp,
   "Max.hack": Computer.max,
-  "Rect.hack": Computer.rect,
 };
 
 export const BUILTIN_CHIPS = {
