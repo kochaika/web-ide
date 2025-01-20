@@ -30,15 +30,27 @@ yargs(hideBin(process.argv))
         }),
     async (argv) => {
       const { directory } = argv;
-      const ext = path.extname(directory);
-        if (ext === ".tst") {
-            console.log(`Detected .tst file.`);
-            // Call `run` logic directly
-            const { name } = path.parse(directory);
-            let pass = await testRunner(dirname(resolve(directory)), name);
-            if (!pass) {
-                process.exit(1);
-            }
+      const curDir = path.basename(path.resolve(directory));
+      if (curDir === "hw4") {
+          console.log(`Detected "hw4" directory. Copy the solution.`);
+
+            // Define the source and destination paths
+          const srcFile = path.join(directory, "Mult.asm"); // hw4/Mult.asm
+          const destFile = "/Mult.asm"; // Root directory
+            // Copy the file using fs
+          try {
+              fsCore.copyFileSync(srcFile, destFile); // Copy synchronously
+              console.log(`Successfully copied.`);
+            } catch {
+                console.error(`Error copying solution.`);
+                process.exit(1); // Exit with error if the copy fails
+          }
+          let hw4Dir = "/projects/project4/Mult.tst"
+          const { name } = path.parse(hw4Dir);
+          let pass = await testRunner(dirname(resolve(hw4Dir)), name);
+          if (!pass) {
+              process.exit(1);
+          }
         } else {
             // Default grade logic (when it's a directory)
             console.log("grade", directory, "nand2tetris grader!");
