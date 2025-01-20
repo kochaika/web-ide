@@ -35,7 +35,14 @@ export async function testRunner(dir: string, file: string) {
   const assignment = await loadAssignment(fs, parse(file));
   const tryRun = runner(fs);
   const run = await tryRun(assignment);
-  console.log(run);
+  console.log("Expected output:");
+  console.log(run.cmp);
+  console.log("Actual output:");
+  console.log(run.out);
+  console.log("------------");
+  console.log(`Passed: ${run.pass}`);
+  return run.pass;
+  //console.log(run);
 }
 
 // export async function testDebugger(root: string, name: string, port: number) {}

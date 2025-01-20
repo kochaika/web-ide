@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import path, { dirname, parse, resolve } from "path";
-import yargs from "yargs";
+import yargs, {exit} from "yargs";
 import { hideBin } from "yargs/helpers";
 import { main } from "./grading.js";
 import { testRunner } from "./testrunner.js";
@@ -8,6 +8,7 @@ import { NodeFileSystemAdapter } from "@davidsouther/jiffies/lib/esm/fs_node.js"
 import { FileSystem } from "@davidsouther/jiffies/lib/esm/fs.js";
 import * as fsCore from "fs";
 import { compile } from "@nand2tetris/simulator/jack/compiler.js";
+import * as process from "node:process";
 
 yargs(hideBin(process.argv))
   .usage("$0 <cmd>")
@@ -60,22 +61,26 @@ yargs(hideBin(process.argv))
           describe:
             "When set, look for the java IDE jars in this path and compare both runs.",
         }),
-    (argv) => {
-      console.log("nand2tetris command run", argv);
-      const { name, ext } = parse(argv.file ?? "");
-      switch (ext) {
-        case "":
-        case ".tst":
-          console.log("tst");
-          testRunner(dirname(resolve(argv.file ?? process.cwd())), name);
-          break;
-        case ".hdl":
-          console.log("hdl");
-          break;
-        default:
-          console.log("unknown", ext);
-          break;
-      }
+    async (argv) => {
+        //console.log("nand2tetris command run", argv);
+        const {name, ext} = parse(argv.file ?? "");
+
+        switch (ext) {
+            case "":
+            case ".tst":
+                console.log("tst");
+                let pass = await testRunner(dirname(resolve(argv.file ?? process.cwd())), name);
+                if (!pass) {
+                    process.exit(1);
+                }
+                break;
+            case ".hdl":
+                console.log("hdl");
+                break;
+            default:
+                console.log("unknown", ext);
+                break;
+        }
     },
   )
   .command(
