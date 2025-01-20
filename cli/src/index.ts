@@ -29,12 +29,25 @@ yargs(hideBin(process.argv))
             "When set, look for the java IDE jars in this path and compare both runs.",
         }),
     async (argv) => {
-      console.log("grade", argv.directory, "nand2tetris grader!");
-      const exitCodePromise = main(argv.directory, argv.java_ide);
-      const exitCode = await exitCodePromise;
-      if (exitCode) {
-        process.exit(exitCode);
-      }
+      const { directory } = argv;
+      const ext = path.extname(directory);
+        if (ext === ".tst") {
+            console.log(`Detected .tst file.`);
+            // Call `run` logic directly
+            const { name } = path.parse(directory);
+            let pass = await testRunner(dirname(resolve(directory)), name);
+            if (!pass) {
+                process.exit(1);
+            }
+        } else {
+            // Default grade logic (when it's a directory)
+            console.log("grade", directory, "nand2tetris grader!");
+            const exitCodePromise = main(directory, argv.java_ide);
+            const exitCode = await exitCodePromise;
+            if (exitCode) {
+                process.exit(exitCode);
+            }
+        }
     },
   )
   .command(
