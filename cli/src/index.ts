@@ -79,6 +79,7 @@ yargs(hideBin(process.argv))
             for (const test of tests) {
                 let hw6TestDir = hw6Dir + test;
                 const { name } = path.parse(hw6TestDir);
+                console.log(`\n${name}:`);
                 let pass = await testRunner(dirname(resolve(hw6TestDir)), name);
                 if (!pass) {
                     process.exit(1);
