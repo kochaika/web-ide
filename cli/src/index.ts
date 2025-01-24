@@ -70,7 +70,7 @@ yargs(hideBin(process.argv))
                 console.error(`Error copying solution. Check all files are present.`);
                 process.exit(1); // Exit with error if the copy fails
             }
-            let hw6Dir = "/projects/project4/"
+            let hw6Dir = "/projects/project6/"
             let tests = [
               "Add.tst",
               "Max.tst",
