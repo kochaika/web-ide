@@ -33,13 +33,13 @@ yargs(hideBin(process.argv))
       const curDir = path.basename(path.resolve(directory));
       if (curDir === "hw4") {
           console.log(`Detected "hw4" directory. Copy the solution.`);
-
-            // Define the source and destination paths
-          const srcFile = path.join(directory, "Mult.asm"); // hw4/Mult.asm
-          const destFile = "/Mult.asm"; // Root directory
-            // Copy the file using fs
           try {
-              fsCore.copyFileSync(srcFile, destFile); // Copy synchronously
+              let srcFile = path.join(directory, "Mult.asm");
+              let destFile = "/Mult.asm";
+              fsCore.copyFileSync(srcFile, destFile);
+              srcFile = path.join(directory, "Fill.asm");
+              destFile = "/Fill.asm";
+              fsCore.copyFileSync(srcFile, destFile);
               console.log(`Successfully copied.`);
             } catch {
                 console.error(`Error copying solution.`);
@@ -51,7 +51,40 @@ yargs(hideBin(process.argv))
           if (!pass) {
               process.exit(1);
           }
-        } else {
+        } if (curDir === "hw6"){
+            console.log(`Detected "hw6" directory. Copy the solution.`);
+            try {
+                const files = [
+                    "Add.hack",
+                    "Max.hack",
+                    "Rect.hack",
+                    "Pong.hack",
+                ];
+                for (const file of files) {
+                    let srcFile = path.join(directory, file);
+                    let destFile = "/" + file;
+                    fsCore.copyFileSync(srcFile, destFile);
+                }
+                console.log(`Successfully copied.`);
+            } catch {
+                console.error(`Error copying solution.`);
+                process.exit(1); // Exit with error if the copy fails
+            }
+            let hw6Dir = "/projects/project4/"
+            let tests = [
+              "Add.tst",
+              "Max.tst",
+              "Rect.tst",
+            ];
+            for (const test of tests) {
+                let hw6TestDir = hw6Dir + test;
+                const { name } = path.parse(hw6TestDir);
+                let pass = await testRunner(dirname(resolve(hw6TestDir)), name);
+                if (!pass) {
+                    process.exit(1);
+                }
+            }
+        }  else {
             // Default grade logic (when it's a directory)
             console.log("grade", directory, "nand2tetris grader!");
             const exitCodePromise = main(directory, argv.java_ide);
