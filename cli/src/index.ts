@@ -42,7 +42,7 @@ yargs(hideBin(process.argv))
               fsCore.copyFileSync(srcFile, destFile);
               console.log(`Successfully copied.`);
             } catch {
-                console.error(`Error copying solution.`);
+                console.error(`Error copying solution. Check all files are present.`);
                 process.exit(1); // Exit with error if the copy fails
           }
           let hw4Dir = "/projects/project4/Mult.tst"
@@ -67,7 +67,7 @@ yargs(hideBin(process.argv))
                 }
                 console.log(`Successfully copied.`);
             } catch {
-                console.error(`Error copying solution.`);
+                console.error(`Error copying solution. Check all files are present.`);
                 process.exit(1); // Exit with error if the copy fails
             }
             let hw6Dir = "/projects/project4/"
