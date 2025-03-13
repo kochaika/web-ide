@@ -51,7 +51,7 @@ yargs(hideBin(process.argv))
           if (!pass) {
               process.exit(1);
           }
-        } if (curDir === "hw6"){
+        } else if (curDir === "hw6"){
             console.log(`Detected "hw6" directory. Copy the solution.`);
             try {
                 const files = [
